@@ -25,6 +25,21 @@ class User extends Authenticatable
      */
     protected $guarded =[];
 
+    public function scopeFilter($query,$search)
+    {
+        $query->when($search ?? false, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('email','like','%'.$search.'%');
+        });
+    }
+
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
