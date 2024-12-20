@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,12 @@ Route::middleware([
     Route::get('/users/{user:id}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
     Route::get('/users/{user:id}/change/password', [UserController::class, 'changePassword'])->name('user.change.password');
     Route::patch('/users/{user:id}/update/password', [UserController::class, 'passwordHandler'])->name('user.password.update');
+
+    // category
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{category:slug}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::patch('/categories/{category:slug}/update', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category:slug}/destroy', [CategoryController::class, 'destroy'])->name('categories.destroy');
 });
