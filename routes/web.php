@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,4 +45,13 @@ Route::middleware([
     Route::get('/categories/{category:slug}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::patch('/categories/{category:slug}/update', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category:slug}/destroy', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    // posts
+    Route::get('/posts', [PostController::class, 'index'])->name('posts');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/posts/{post:slug}/show', [PostController::class, 'show'])->name('post.show');
+    Route::get('/posts/{post:slug}/edit', [PostController::class, 'edit'])->name('post.edit');
+    Route::patch('/posts/{post:slug}/update', [PostController::class, 'update'])->name('post.update');
+    Route::delete('/posts/{post:slug}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
 });
