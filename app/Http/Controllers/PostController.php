@@ -13,7 +13,7 @@ class PostController extends Controller
     public function index()
     {
         return view('App.posts.index',[
-            'posts' => Post::with('category')->get()
+            'posts' => Post::with('category')->filter(request('search'))->get()
         ]);
     }
 
