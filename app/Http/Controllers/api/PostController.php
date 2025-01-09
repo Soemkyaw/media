@@ -13,11 +13,20 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->with('category')->get();
+        $posts = Post::latest()->with('category')->filter(request('search'))->get();
 
         return response()->json([
             'posts' => $posts
         ], 200);
+    }
+
+    public function randomPosts()
+    {
+        $randomPosts = Post::inRandomOrder()->take(3)->get();
+
+        return response()->json([
+            'randomPosts' => $randomPosts
+        ],200);
     }
 
     public function show(Post $post)

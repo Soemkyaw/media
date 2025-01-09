@@ -16,13 +16,15 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/users/{user}/update', [UserController::class, 'update'])->middleware('auth:sanctum');
 
 // category api
-Route::get('/categories', [CategoryController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/categories', [CategoryController::class, 'index']);
 Route::post('/categories/store', [CategoryController::class, 'store'])->middleware('auth:sanctum');
 Route::put('/categories/{category}/update', [CategoryController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/categories/{category}/destroy', [CategoryController::class, 'destroy'])->middleware('auth:sanctum');
+Route::get('/categories/{category}/posts', [CategoryController::class, 'posts']);
 
 // post api
 Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/random', [PostController::class, 'randomPosts']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
 Route::post('/posts/store', [PostController::class, 'store'])->middleware('auth:sanctum');
 Route::post('/posts/{post}/update', [PostController::class, 'update'])->middleware('auth:sanctum');

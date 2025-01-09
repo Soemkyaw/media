@@ -72,4 +72,13 @@ class CategoryController extends Controller
             'message' => 'category deleted...'
         ],200);
     }
+
+    public function posts(Category $category)
+    {
+        $category->load('posts');
+        
+        return response([
+            'posts' => $category->posts
+        ], 200);
+    }
 }
