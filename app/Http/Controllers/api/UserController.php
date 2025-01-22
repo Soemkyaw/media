@@ -44,7 +44,8 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'login success',
-            'token' => $token
+            'token' => $token,
+            'user' => $user
         ],200);
     }
 
@@ -82,7 +83,8 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'New account created .',
-            'token' => $token
+            'token' => $token,
+            'user' => $user
         ],200);
     }
 
@@ -123,5 +125,5 @@ class UserController extends Controller
 
     }
 
-    
+
 }

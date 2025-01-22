@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
@@ -31,10 +33,18 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $post = Post::where('id', $post->id)->with('category')->first();
+        $post = Post::where('id', $post->id)->with('category','comments.user','likedByUser')->first();
+
+        if ($post) {
+            $post->comments = $post->comments->map(function ($comment) {
+                $comment->created_at_human = $comment->created_at->diffForHumans();
+                return $comment;
+            });
+        }
 
         return response()->json([
-            'post' => $post
+            'post' => $post,
+            'likeCount' => $post->likedByUser->count()
         ], 200);
     }
 
@@ -111,6 +121,14 @@ class PostController extends Controller
         $post->delete();
         return response()->json([
             'message' => "Post has been deleted"
+        ], 200);
+    }
+
+    public function checkLikeStatus(Post $post)
+    {
+        $isLiked = $post->isLiked(request()->user_id);
+        return response()->json([
+            'isLiked' => $isLiked
         ], 200);
     }
 }

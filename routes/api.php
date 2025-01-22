@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\api\CommentController;
+use App\Http\Controllers\api\LikeController;
 use App\Http\Controllers\api\PostController;
 use App\Http\Controllers\api\UserController;
 use Illuminate\Http\Request;
@@ -22,6 +24,7 @@ Route::put('/categories/{category}/update', [CategoryController::class, 'update'
 Route::delete('/categories/{category}/destroy', [CategoryController::class, 'destroy'])->middleware('auth:sanctum');
 Route::get('/categories/{category}/posts', [CategoryController::class, 'posts']);
 
+
 // post api
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/random', [PostController::class, 'randomPosts']);
@@ -29,3 +32,14 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 Route::post('/posts/store', [PostController::class, 'store'])->middleware('auth:sanctum');
 Route::post('/posts/{post}/update', [PostController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/posts/{post}/destroy', [PostController::class, 'destroy'])->middleware('auth:sanctum');
+// like
+// Route::post('/posts/{post}/like/toggle', [PostController::class, 'toggleLike']);
+Route::get('/posts/{post}/liked', [PostController::class, 'checkLikeStatus']);
+
+
+// comment api
+Route::get('/comments', [CommentController::class, 'index']);
+Route::post('/comments/store',[CommentController::class,'store'])->middleware('auth:sanctum');
+Route::delete('/comments/{comment}/destroy', [CommentController::class, 'destroy'])->middleware('auth:sanctum');
+
+Route::post('/likes/toggle', [LikeController::class,'toggleLike']);
